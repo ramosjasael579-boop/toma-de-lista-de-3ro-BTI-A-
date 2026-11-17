@@ -1,0 +1,517 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Lista QR 3BT-A</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: one column tool. Header + tab bar, then a work panel; matrix scrolls inside its own box. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --ink:#14213d; --muted:#5b6578; --line:#dbe1ea;
+  --accent:#1d4ed8; --accent-ink:#ffffff; --accent-soft:#e6edff;
+  --ok:#15803d; --ok-soft:#e1f5e8; --bad:#b91c1c; --bad-soft:#fde7e7; --warn:#a15c07; --warn-soft:#fff1d6;
+  --font-display:'Space Grotesk',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1522; --surface:#17202f; --ink:#e8edf6; --muted:#9aa6bb; --line:#2a364b;
+  --accent:#6b9bff; --accent-ink:#0b1424; --accent-soft:#1e2d4d;
+  --ok:#4ade80; --ok-soft:#14352a; --bad:#f87171; --bad-soft:#3b1d22; --warn:#fbbf24; --warn-soft:#3a2d12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1522; --surface:#17202f; --ink:#e8edf6; --muted:#9aa6bb; --line:#2a364b;
+  --accent:#6b9bff; --accent-ink:#0b1424; --accent-soft:#1e2d4d;
+  --ok:#4ade80; --ok-soft:#14352a; --bad:#f87171; --bad-soft:#3b1d22; --warn:#fbbf24; --warn-soft:#3a2d12; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--font-body);margin:0;
+  padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto}
+header{padding-block:20px 12px}
+h1{font:700 22px/1.2 var(--font-display);margin:0;text-wrap:balance}
+header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-block:8px 14px}
+button,select,input{font:inherit;color:inherit}
+.tab{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:500}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 220px}
+label,.lbl{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+select,input[type=text],input[type=search]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:500;white-space:nowrap}
+.btn:hover{background:var(--accent-soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.btn.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.btn[disabled]{opacity:.5;cursor:default}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-block:14px}
+.stat{background:var(--bg);border-radius:8px;padding:10px 12px}
+.stat b{display:block;font:700 24px/1.1 var(--font-display);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.stat.ok b{color:var(--ok)}.stat.bad b{color:var(--bad)}.stat.warn b{color:var(--warn)}
+.section{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.section h2{font:700 15px var(--font-display);margin:0 0 10px}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
+.msg{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:14px;background:var(--bg)}
+.msg.ok{background:var(--ok-soft);color:var(--ok)}.msg.bad{background:var(--bad-soft);color:var(--bad)}.msg.warn{background:var(--warn-soft);color:var(--warn)}
+.cam{margin-top:12px}
+.cam video{width:100%;max-width:420px;border-radius:10px;background:#000;display:block}
+.list{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.st{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.st:first-child{border-top:0}
+.st .n{color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px}
+.st .nm{font-weight:500;overflow-wrap:anywhere;font-size:14px}
+.st .meta{font-size:12px;color:var(--muted)}
+.seg{display:flex;gap:4px}
+.seg button{border:1px solid var(--line);background:var(--bg);padding:7px 11px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.p.on{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.seg button.f.on{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.seg button.t.on{background:var(--warn);border-color:var(--warn);color:var(--surface)}
+.st.p{background:linear-gradient(90deg,var(--ok-soft),transparent 60%)}
+.st.f{background:linear-gradient(90deg,var(--bad-soft),transparent 60%)}
+.st.t{background:linear-gradient(90deg,var(--warn-soft),transparent 60%)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:10px;display:flex;gap:12px;align-items:center;font-size:14px;z-index:20;max-width:calc(100% - 32px)}
+.toast button{background:none;border:0;color:var(--accent-soft);font-weight:700;cursor:pointer;text-decoration:underline}
+.mx-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:70vh}
+table.mx{border-collapse:separate;border-spacing:0;font-size:12px;font-variant-numeric:tabular-nums}
+.mx th,.mx td{padding:6px 8px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:center;white-space:nowrap;background:var(--surface)}
+.mx thead th{position:sticky;top:0;z-index:2;font-weight:600;background:var(--bg)}
+.mx th.nm,.mx td.nm{position:sticky;left:0;z-index:1;text-align:left;min-width:170px;max-width:170px;overflow:hidden;text-overflow:ellipsis;background:var(--surface)}
+.mx thead th.nm{z-index:3;background:var(--bg)}
+.mx td.p{color:var(--ok);background:var(--ok-soft);font-weight:700}
+.mx td.f{color:var(--bad);background:var(--bad-soft);font-weight:700}
+.mx td.t{color:var(--warn);background:var(--warn-soft);font-weight:700}
+.mx th.cur{background:var(--accent-soft)}
+.mx thead th button{all:unset;cursor:pointer;display:block;line-height:1.3}
+.qrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.qc{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;background:#fff;color:#111;display:flex;flex-direction:column;gap:6px;align-items:center}
+.qc svg{width:100%;max-width:170px;height:auto}
+.qc .c{font:700 14px var(--font-display)}
+.qc .t{font-size:11px;line-height:1.25;color:#444;min-height:27px}
+.qc button{border:1px solid #cfd6e2;background:#f4f6f9;color:#14213d;border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer}
+@media (max-width:520px){.seg button{padding:7px 8px;font-size:12px}.st{grid-template-columns:28px minmax(0,1fr)}.st .seg{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Lista de asistencia con QR</h1>
+  <p>3.º Bachillerato Técnico, paralelo A · Sistemas Operativos y Redes · 22 estudiantes</p>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-lista" aria-selected="true" data-tab="lista">Tomar lista</button>
+  <button class="tab" role="tab" id="t-resumen" aria-selected="false" data-tab="resumen">Resumen por fechas</button>
+  <button class="tab" role="tab" id="t-qr" aria-selected="false" data-tab="qr">Códigos QR</button>
+</div>
+
+<section id="p-lista" class="panel">
+  <div class="row">
+    <button class="btn" id="prev" aria-label="Clase anterior">‹</button>
+    <div class="field">
+      <label for="sesion">Clase</label>
+      <select id="sesion"></select>
+    </div>
+    <button class="btn" id="next" aria-label="Clase siguiente">›</button>
+  </div>
+
+  <div class="msg" id="clsinfo" style="margin-top:14px"></div>
+  <div class="stats" id="stats"></div>
+
+  <div class="row">
+    <button class="btn ok" id="allP">Todos presentes</button>
+    <button class="btn bad" id="allF">Todos faltan</button>
+    <button class="btn" id="clear">Limpiar clase</button>
+  </div>
+  <p class="hint">Estos botones marcan a los 22 estudiantes de la clase elegida. Después puedes cambiar a cualquiera de forma individual.</p>
+
+  <div class="section">
+    <h2>Registrar con QR o código</h2>
+    <div class="row">
+      <div class="field">
+        <label for="code">Código escaneado o escrito</label>
+        <input type="text" id="code" placeholder="Ejemplo: 3BT-A-01" autocomplete="off" autocapitalize="characters">
+      </div>
+      <button class="btn primary" id="reg">Registrar</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="camOn">Activar cámara</button>
+      <button class="btn" id="camOff" hidden>Detener cámara</button>
+      <button class="btn" id="photoBtn">Foto del QR</button>
+      <input type="file" id="photo" accept="image/*" capture="environment" hidden>
+    </div>
+    <div class="cam" id="cam" hidden><video id="vid" playsinline muted></video></div>
+    <div class="msg" id="msg" hidden></div>
+    <p class="hint">Un lector de códigos USB o Bluetooth escribe el código en el campo y confirma solo. Si la cámara en vivo no está disponible en esta vista, usa «Foto del QR».</p>
+    <p class="hint">Criterio automático: si el QR se lee hasta 5 minutos después de la hora de inicio, queda Presente. Pasados esos 5 minutos, queda Atraso y se muestran los minutos de retraso. Quien no registra su QR queda sin marcar y puedes ponerle Falta.</p>
+  </div>
+
+  <div class="section">
+    <h2>Estudiantes</h2>
+    <input type="search" id="q" placeholder="Buscar por nombre o código">
+    <div class="list" id="list"></div>
+  </div>
+
+  <div class="section">
+    <h2>Descargar</h2>
+    <div class="row">
+      <button class="btn" id="csv">CSV de esta clase</button>
+      <button class="btn" id="xlsx">Excel con todas las fechas</button>
+    </div>
+    <p class="hint">Los registros se guardan en este navegador. Descarga el Excel para conservar una copia.</p>
+  </div>
+</section>
+
+<section id="p-resumen" class="panel" hidden>
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <div><b style="font:700 15px var(--font-display)">Asistencia por fecha</b>
+    <p class="hint" style="margin:2px 0 0">✔ presente · A atraso · ✘ falta · vacío sin marcar. Toca una fecha para abrirla.</p></div>
+  </div>
+  <div class="mx-wrap" style="margin-top:12px"><table class="mx" id="mx"></table></div>
+</section>
+
+<section id="p-qr" class="panel" hidden>
+  <b style="font:700 15px var(--font-display)">Código QR de cada estudiante</b>
+  <div class="field" style="margin-block:10px 4px;max-width:420px"><label for="qrSesion">Fecha de los QR</label><select id="qrSesion"></select></div>
+  <div class="field" style="max-width:560px;margin-block:8px"><label for="baseUrl">Enlace de tu página (donde subiste este archivo)</label><input type="text" id="baseUrl" placeholder="https://tu-usuario.github.io/lista/" autocomplete="off"></div>
+  <label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:8px"><input type="checkbox" id="isDoc"> Este dispositivo es el del docente (solo aquí se registran los QR)</label>
+  <p class="hint" style="margin:2px 0 12px">Cada fecha tiene un QR distinto para cada estudiante. Al escanearlo con la cámara del celular se abre esta página y marca la asistencia al instante (solo se guarda en el dispositivo del docente). Un QR solo vale el día de su clase.</p>
+  <div class="qrs" id="qrs"></div>
+</section>
+</div>
+
+<div class="toast" id="toast" hidden><span id="toastTxt"></span><button id="toastUndo" hidden>Deshacer</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const STUDENTS = [{"n": 1, "codigo": "3BT-A-01", "nombre": "ARBOLEDA LOAIZA TIFFANI LOAIZA"}, {"n": 2, "codigo": "3BT-A-02", "nombre": "BOLAÑOS QUIÑONES CRISMARI JAVIETH"}, {"n": 3, "codigo": "3BT-A-03", "nombre": "BUENAÑO ACURIO MARCOS JOSUE"}, {"n": 4, "codigo": "3BT-A-04", "nombre": "CAÑAR PUNINA VANESSA ANAHI"}, {"n": 5, "codigo": "3BT-A-05", "nombre": "CHAMBA LEMA DAFNE MONSERRATH"}, {"n": 6, "codigo": "3BT-A-06", "nombre": "CHANGO CAIZA JAFET EMMANUEL"}, {"n": 7, "codigo": "3BT-A-07", "nombre": "COLLAGUAZO NINACURI JEFERSON ALEXANDER"}, {"n": 8, "codigo": "3BT-A-08", "nombre": "FAVICELA TIVIANO ALEX GEOVANNY"}, {"n": 9, "codigo": "3BT-A-09", "nombre": "GUANGASI TIRADO THALIA AURORA"}, {"n": 10, "codigo": "3BT-A-10", "nombre": "JIMÉNEZ OROSCO LUIS FERNANDO"}, {"n": 11, "codigo": "3BT-A-11", "nombre": "LAZ GARCÉS ERICK ALEXANDER"}, {"n": 12, "codigo": "3BT-A-12", "nombre": "LIZANO VILLARREAL VICTORIA NICOLE"}, {"n": 13, "codigo": "3BT-A-13", "nombre": "OCHOA SANGUCHO ALAN ANDRÉS"}, {"n": 14, "codigo": "3BT-A-14", "nombre": "PIMBOMAZA TUBON EDISON ALEXANDER"}, {"n": 15, "codigo": "3BT-A-15", "nombre": "QUISHPE UQUILLAS HILARY LESSETTE"}, {"n": 16, "codigo": "3BT-A-16", "nombre": "SAMANIEGO SANCHEZ MAYKEL ALEJANDRO"}, {"n": 17, "codigo": "3BT-A-17", "nombre": "TIVANLOMBO RAMOS YARVIS JASAEL"}, {"n": 18, "codigo": "3BT-A-18", "nombre": "TIVIANO CHIMBO CHRISTOPHER JOEL"}, {"n": 19, "codigo": "3BT-A-19", "nombre": "VILLEGAS PINOS MAYKEL GABRIEL"}, {"n": 20, "codigo": "3BT-A-20", "nombre": "YANCHAPANTA CRIOLLO INGRID BELEN"}, {"n": 21, "codigo": "3BT-A-21", "nombre": "YANCHAPANTA YANCHAPANTA MAYKEL STEVE"}, {"n": 22, "codigo": "3BT-A-22", "nombre": "YUGSI TOAQUIZA JOSTIN JARIEL"}];
+const SESSIONS = [{"n": 1, "fecha": "2026-09-03", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 2, "fecha": "2026-09-04", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 3, "fecha": "2026-09-10", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 4, "fecha": "2026-09-11", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 5, "fecha": "2026-09-17", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 6, "fecha": "2026-09-18", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 7, "fecha": "2026-09-24", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 8, "fecha": "2026-09-25", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 9, "fecha": "2026-10-01", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 10, "fecha": "2026-10-02", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 11, "fecha": "2026-10-08", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 12, "fecha": "2026-10-09", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 13, "fecha": "2026-10-15", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 14, "fecha": "2026-10-16", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 15, "fecha": "2026-10-22", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 16, "fecha": "2026-10-23", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 17, "fecha": "2026-10-29", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 18, "fecha": "2026-10-30", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 19, "fecha": "2026-11-05", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 20, "fecha": "2026-11-06", "dia": "Viernes", "hora": "17:30 - 18:50"}, {"n": 21, "fecha": "2026-11-12", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 22, "fecha": "2026-11-13", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 23, "fecha": "2026-11-19", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 24, "fecha": "2026-11-20", "dia": "Viernes", "hora": "16:10 - 17:30"}, {"n": 25, "fecha": "2026-11-26", "dia": "Jueves", "hora": "17:30 - 18:50"}, {"n": 26, "fecha": "2026-11-27", "dia": "Viernes", "hora": "16:10 - 17:30"}];
+const KEY = 'lista-qr-3bt-a-v1';
+let BASE = '';              // enlace de esta página; los QR apuntan aquí
+try { BASE = localStorage.getItem('lista-qr-base') || ''; } catch (e) {}
+if (!BASE && /^https?:/.test(location.href) && !window.claude) BASE = location.href.split('#')[0];
+const isDoc = () => { try { return localStorage.getItem('lista-qr-docente') === '1'; } catch (e) { return false; } };
+const GRACE = 5;            // minutos de gracia después de la hora de inicio
+const $ = id => document.getElementById(id);
+
+let rec = {};              // { sesion: { codigo: {s:'P'|'F', t:ISO} } }
+try { rec = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { rec = {}; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {} }
+
+// ---------- clase actual ----------
+const today = (() => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); })();
+let cur = (SESSIONS.find(s => s.fecha >= today) || SESSIONS[SESSIONS.length-1]).n;
+const dmy = f => f.slice(8,10) + '/' + f.slice(5,7) + '/' + f.slice(0,4);
+const sess = n => SESSIONS.find(s => s.n === n);
+const startTime = n => sess(n).hora.split('-')[0].trim();
+const startDate = n => new Date(sess(n).fecha + 'T' + startTime(n) + ':00');
+const minTarde = t => Math.max(1, Math.round((new Date(t) - startDate(cur)) / 60000));
+const cls = () => (rec[cur] = rec[cur] || {});
+
+$('sesion').innerHTML = SESSIONS.map(s => `<option value="${s.n}">Clase ${s.n} · ${dmy(s.fecha)} (${s.dia}, ${s.hora})</option>`).join('');
+$('sesion').value = cur;
+$('sesion').onchange = e => { cur = +e.target.value; render(); };
+$('prev').onclick = () => { if (cur > 1) { cur--; $('sesion').value = cur; render(); } };
+$('next').onclick = () => { if (cur < SESSIONS.length) { cur++; $('sesion').value = cur; render(); } };
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+function showTab(t) {
+  ['lista','resumen','qr'].forEach(k => {
+    $('p-' + k).hidden = k !== t;
+    $('t-' + k).setAttribute('aria-selected', k === t);
+  });
+  if (t !== 'lista') stopCam();
+  if (t === 'resumen') renderMatrix();
+  if (t === 'qr') { qrSes = cur; $('qrSesion').value = cur; renderQRs(); }
+}
+
+// ---------- marcar ----------
+function mark(code, s, silent) {
+  const c = cls();
+  if (s === null) delete c[code]; else c[code] = { s, t: new Date().toISOString() };
+  save(); if (!silent) render();
+}
+function snapshot() { return JSON.stringify(rec[cur] || {}); }
+function bulk(s) {
+  const before = snapshot();
+  const c = cls();
+  STUDENTS.forEach(st => { if (s === null) delete c[st.codigo]; else c[st.codigo] = { s, t: new Date().toISOString() }; });
+  save(); render();
+  const label = s === 'P' ? 'Los 22 marcados como presentes.' : s === 'F' ? 'Los 22 marcados con falta.' : 'Clase limpiada.';
+  toast(label, () => { rec[cur] = JSON.parse(before); save(); render(); });
+}
+$('allP').onclick = () => bulk('P');
+$('allF').onclick = () => bulk('F');
+$('clear').onclick = () => bulk(null);
+
+let toastTimer;
+function toast(txt, undo) {
+  $('toastTxt').textContent = txt; $('toast').hidden = false;
+  $('toastUndo').hidden = !undo;
+  $('toastUndo').onclick = () => { undo && undo(); $('toast').hidden = true; };
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').hidden = true, 6000);
+}
+
+// ---------- render lista ----------
+function render() {
+  const c = cls();
+  let p = 0, f = 0, a = 0;
+  STUDENTS.forEach(s => { const r = c[s.codigo]; if (r) { if (r.s === 'P') p++; else if (r.s === 'T') a++; else f++; } });
+  const sin = STUDENTS.length - p - f - a;
+  const pct = STUDENTS.length ? Math.round((p + a) * 100 / STUDENTS.length) : 0;
+  $('clsinfo').textContent = 'Hora de inicio: ' + startTime(cur) + '. Hasta ' + GRACE + ' min después sigue como Presente; pasado ese margen, el QR se registra como Atraso.';
+  $('stats').innerHTML =
+    `<div class="stat ok"><b>${p}</b><span>Presentes</span></div>` +
+    `<div class="stat warn"><b>${a}</b><span>Atrasos</span></div>` +
+    `<div class="stat bad"><b>${f}</b><span>Faltas</span></div>` +
+    `<div class="stat"><b>${sin}</b><span>Sin marcar</span></div>` +
+    `<div class="stat"><b>${pct}%</b><span>Asistencia</span></div>`;
+  $('prev').disabled = cur <= 1; $('next').disabled = cur >= SESSIONS.length;
+  renderList();
+}
+function renderList() {
+  const q = $('q').value.trim().toLowerCase();
+  const c = cls();
+  const rows = STUDENTS.filter(s => !q || s.nombre.toLowerCase().includes(q) || s.codigo.toLowerCase().includes(q));
+  $('list').innerHTML = rows.map(s => {
+    const r = c[s.codigo];
+    const hora = r ? new Date(r.t).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : '';
+    return `<div class="st ${r ? r.s.toLowerCase() : ''}">
+      <span class="n">${s.n}</span>
+      <div><div class="nm">${s.nombre}</div><div class="meta">${s.codigo}${hora ? ' · ' + hora : ''}${r && r.s === 'T' ? ' · ' + minTarde(r.t) + ' min tarde' : ''}</div></div>
+      <div class="seg">
+        <button class="p ${r && r.s === 'P' ? 'on' : ''}" data-c="${s.codigo}" data-s="P" aria-pressed="${!!(r && r.s === 'P')}">Presente</button>
+        <button class="t ${r && r.s === 'T' ? 'on' : ''}" data-c="${s.codigo}" data-s="T" aria-pressed="${!!(r && r.s === 'T')}">Atraso</button>
+        <button class="f ${r && r.s === 'F' ? 'on' : ''}" data-c="${s.codigo}" data-s="F" aria-pressed="${!!(r && r.s === 'F')}">Falta</button>
+      </div></div>`;
+  }).join('') || '<div class="st"><span></span><div class="meta">Ningún estudiante coincide.</div><span></span></div>';
+}
+$('list').onclick = e => {
+  const b = e.target.closest('button[data-c]'); if (!b) return;
+  const cur0 = cls()[b.dataset.c];
+  mark(b.dataset.c, cur0 && cur0.s === b.dataset.s ? null : b.dataset.s);
+};
+$('q').oninput = renderList;
+
+// ---------- registrar por código ----------
+function show(text, kind) { const m = $('msg'); m.hidden = false; m.className = 'msg ' + kind; m.textContent = text; }
+function beep(ok) {
+  try {
+    const a = new (window.AudioContext || window.webkitAudioContext)();
+    const o = a.createOscillator(), g = a.createGain();
+    o.frequency.value = ok ? 880 : 220; g.gain.value = .08; o.connect(g); g.connect(a.destination);
+    o.start(); o.stop(a.currentTime + .12);
+  } catch (e) {}
+}
+function register(raw) {
+  let txt = String(raw || '').trim().toUpperCase();
+  if (!txt) return false;
+  const hm = txt.match(/#(3BT-A-\d+)-C(\d+)$/);
+  if (hm) txt = hm[1] + '|C' + hm[2];
+  const mm = txt.match(/\|C(\d+)\b/);
+  if (mm) {
+    const o = sess(+mm[1]);
+    if (+mm[1] !== cur) { show('Este QR es de la clase ' + mm[1] + (o ? ' (' + dmy(o.fecha) + ')' : '') + ', pero tienes abierta la clase ' + cur + '.', 'bad'); beep(false); return false; }
+    txt = txt.split('|')[0];
+  }
+  const st = STUDENTS.find(s => txt === s.codigo.toUpperCase()) || STUDENTS.find(s => txt.includes(s.codigo.toUpperCase()));
+  if (!st) { show('Código no reconocido: ' + raw, 'bad'); beep(false); return false; }
+  const prev = cls()[st.codigo];
+  const hhmm = d => d.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+  if (prev && (prev.s === 'P' || prev.s === 'T')) {
+    show(st.nombre + ' ya estaba registrado: ' + (prev.s === 'P' ? 'Presente' : 'Atraso') + ' a las ' + hhmm(new Date(prev.t)) + '.', 'warn');
+    beep(true); return true;
+  }
+  const now = new Date(), ini = startDate(cur), late = now > new Date(ini.getTime() + GRACE * 60000);
+  mark(st.codigo, late ? 'T' : 'P');
+  show(late
+    ? 'ATRASO: ' + st.nombre + ' llegó a las ' + hhmm(now) + '. La clase empezó a las ' + startTime(cur) + ' (' + Math.max(1, Math.round((now - ini) / 60000)) + ' min tarde).'
+    : 'PRESENTE: ' + st.nombre + ' llegó a las ' + hhmm(now) + ' (la clase empieza a las ' + startTime(cur) + ').', late ? 'warn' : 'ok');
+  beep(true); return true;
+}
+$('reg').onclick = () => { if (register($('code').value)) $('code').value = ''; $('code').focus(); };
+$('code').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('reg').click(); } });
+
+// ---------- cámara en vivo ----------
+let stream = null, raf = 0, last = '', lastT = 0;
+const cv = document.createElement('canvas'), cx = cv.getContext('2d', { willReadFrequently: true });
+async function startCam() {
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('sin API');
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    $('vid').srcObject = stream; await $('vid').play();
+    $('cam').hidden = false; $('camOn').hidden = true; $('camOff').hidden = false;
+    show('Cámara activa. Muestra el QR de cada estudiante.', 'ok');
+    tick();
+  } catch (e) {
+    stopCam();
+    show('La cámara en vivo no está disponible en esta vista. Usa «Foto del QR» o un lector de códigos.', 'warn');
+  }
+}
+function stopCam() {
+  cancelAnimationFrame(raf);
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  stream = null; $('cam').hidden = true; $('camOn').hidden = false; $('camOff').hidden = true;
+}
+function tick() {
+  const v = $('vid');
+  if (v.readyState >= 2) {
+    cv.width = v.videoWidth; cv.height = v.videoHeight; cx.drawImage(v, 0, 0);
+    const img = cx.getImageData(0, 0, cv.width, cv.height);
+    const r = jsQR(img.data, img.width, img.height);
+    if (r && r.data) {
+      const now = Date.now();
+      if (r.data !== last || now - lastT > 2500) { last = r.data; lastT = now; register(r.data); }
+    }
+  }
+  raf = requestAnimationFrame(tick);
+}
+$('camOn').onclick = startCam; $('camOff').onclick = stopCam;
+
+// ---------- foto del QR ----------
+$('photoBtn').onclick = () => $('photo').click();
+$('photo').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image(), url = URL.createObjectURL(f);
+  img.onload = () => {
+    const k = Math.min(1, 1200 / Math.max(img.width, img.height));
+    cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+    cx.drawImage(img, 0, 0, cv.width, cv.height);
+    const d = cx.getImageData(0, 0, cv.width, cv.height);
+    const r = jsQR(d.data, d.width, d.height, { inversionAttempts: 'attemptBoth' });
+    URL.revokeObjectURL(url);
+    r && r.data ? register(r.data) : show('No se encontró un QR en la foto. Acércate y vuelve a intentarlo.', 'bad');
+  };
+  img.src = url; e.target.value = '';
+};
+
+// ---------- resumen por fechas ----------
+function renderMatrix() {
+  let h = '<thead><tr><th class="nm">Estudiante</th>' + SESSIONS.map(s =>
+    `<th class="${s.n === cur ? 'cur' : ''}"><button data-n="${s.n}">C${s.n}<br>${s.fecha.slice(8)}/${s.fecha.slice(5,7)}</button></th>`).join('') +
+    '<th>✔</th><th>A</th><th>✘</th><th>%</th></tr></thead><tbody>';
+  const tot = SESSIONS.map(() => [0, 0, 0]);
+  STUDENTS.forEach(st => {
+    let p = 0, f = 0, a = 0;
+    h += `<tr><td class="nm" title="${st.nombre}">${st.n}. ${st.nombre}</td>`;
+    SESSIONS.forEach((s, i) => {
+      const r = (rec[s.n] || {})[st.codigo];
+      if (r && r.s === 'P') { p++; tot[i][0]++; } else if (r && r.s === 'T') { a++; tot[i][1]++; } else if (r) { f++; tot[i][2]++; }
+      h += `<td class="${r ? r.s.toLowerCase() : ''}">${r ? ({ P: '✔', T: 'A', F: '✘' }[r.s]) : ''}</td>`;
+    });
+    h += `<td>${p}</td><td>${a}</td><td>${f}</td><td>${p + a + f ? Math.round((p + a) * 100 / (p + a + f)) + '%' : ''}</td></tr>`;
+  });
+  h += '<tr><td class="nm"><b>Total presentes</b></td>' + tot.map(t => `<td>${t[0] || ''}</td>`).join('') + '<td></td><td></td><td></td><td></td></tr>';
+  h += '<tr><td class="nm"><b>Total atrasos</b></td>' + tot.map(t => `<td>${t[1] || ''}</td>`).join('') + '<td></td><td></td><td></td><td></td></tr>';
+  h += '<tr><td class="nm"><b>Total faltas</b></td>' + tot.map(t => `<td>${t[2] || ''}</td>`).join('') + '<td></td><td></td><td></td><td></td></tr></tbody>';
+  $('mx').innerHTML = h;
+}
+$('mx').onclick = e => {
+  const b = e.target.closest('button[data-n]'); if (!b) return;
+  cur = +b.dataset.n; $('sesion').value = cur; showTab('lista'); render();
+};
+
+// ---------- códigos QR ----------
+function qrMatrix(text) { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q; }
+function qrSvg(text) {
+  const q = qrMatrix(text), n = q.getModuleCount(), m = 2;
+  let d = '';
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c + m},${r + m}h1v1h-1z`;
+  const s = n + m * 2;
+  return `<svg viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges" role="img" aria-label="QR ${text}"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+}
+let qrSes = cur;
+const payload = (code, n) => BASE + '#' + code + '-C' + n;
+$('qrSesion').innerHTML = $('sesion').innerHTML;
+$('baseUrl').value = BASE;
+$('baseUrl').onchange = e => { BASE = e.target.value.trim().split('#')[0]; try { localStorage.setItem('lista-qr-base', BASE); } catch (x) {} renderQRs(); };
+$('isDoc').checked = isDoc();
+$('isDoc').onchange = e => { try { localStorage.setItem('lista-qr-docente', e.target.checked ? '1' : '0'); } catch (x) {} };
+$('qrSesion').onchange = e => { qrSes = +e.target.value; renderQRs(); };
+function renderQRs() {
+  if (!BASE) { $('qrs').innerHTML = '<p class="hint">Pega arriba el enlace donde alojaste esta página para generar los QR.</p>'; return; }
+  $('qrs').innerHTML = STUDENTS.map(s => `<div class="qc">${qrSvg(payload(s.codigo, qrSes))}<div class="c">${s.codigo}</div><div class="t">${s.nombre}<br>Clase ${qrSes} · ${dmy(sess(qrSes).fecha)}</div><button data-c="${s.codigo}">Descargar PNG</button></div>`).join('');
+}
+$('qrs').onclick = async e => {
+  const b = e.target.closest('button[data-c]'); if (!b) return;
+  const code = b.dataset.c, q = qrMatrix(payload(code, qrSes)), n = q.getModuleCount(), k = 12, m = 3, S = (n + m * 2) * k;
+  const c = document.createElement('canvas'); c.width = c.height = S;
+  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, S, S); g.fillStyle = '#000';
+  for (let r = 0; r < n; r++) for (let x = 0; x < n; x++) if (q.isDark(r, x)) g.fillRect((x + m) * k, (r + m) * k, k, k);
+  c.toBlob(blob => saveFile('QR-C' + qrSes + '-' + code + '.png', blob), 'image/png');
+};
+
+// ---------- descargas ----------
+async function saveFile(filename, data) {
+  try {
+    const d = await cl.use('downloads');
+    if (!d) {
+      const b = data instanceof Blob ? data : new Blob([data]);
+      const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      toast('Archivo listo: ' + filename); return;
+    }
+    await d.save({ filename, data });
+    toast('Archivo listo: ' + filename);
+  } catch (e) {
+    if (e && e.code === 'declined') return;
+    toast('Las descargas no están disponibles en esta vista.');
+  }
+}
+const cl = window.claude || { use: async () => null };
+$('csv').onclick = () => {
+  const s = sess(cur), c = cls();
+  const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const rows = [['N.º', 'Código', 'Estudiante', 'Fecha', 'Estado', 'Hora de registro']];
+  STUDENTS.forEach(st => {
+    const r = c[st.codigo];
+    rows.push([st.n, st.codigo, st.nombre, dmy(s.fecha), r ? ({ P: 'Presente', T: 'Atraso', F: 'Falta' }[r.s]) : 'Sin marcar', r ? new Date(r.t).toLocaleTimeString('es-EC') : '']);
+  });
+  saveFile('asistencia-clase-' + s.n + '-' + s.fecha + '.csv', '﻿' + rows.map(r => r.map(esc).join(',')).join('\r\n'));
+};
+$('xlsx').onclick = () => {
+  const head = ['N.º', 'Código', 'Nombres completos'].concat(SESSIONS.map(s => `${s.n} · ${dmy(s.fecha)} · ${s.hora}`), ['Presentes', 'Atrasos', 'Faltas', '% asistencia']);
+  const aoa = [['REGISTRO DE ASISTENCIA - 3RO BACHILLERATO TÉCNICO'], ['Informática | Paralelo A | Sistemas Operativos y Redes | Septiembre - noviembre 2026'], head];
+  const tp = SESSIONS.map(() => 0), ta = SESSIONS.map(() => 0), tf = SESSIONS.map(() => 0);
+  STUDENTS.forEach(st => {
+    let p = 0, f = 0, a = 0;
+    const cells = SESSIONS.map((s, i) => {
+      const r = (rec[s.n] || {})[st.codigo];
+      if (!r) return '';
+      if (r.s === 'P') { p++; tp[i]++; return '✔'; }
+      if (r.s === 'T') { a++; ta[i]++; return 'A'; }
+      f++; tf[i]++; return '✘';
+    });
+    aoa.push([st.n, st.codigo, st.nombre].concat(cells, [p, a, f, p + a + f ? Math.round((p + a) * 100 / (p + a + f)) / 100 : '']));
+  });
+  aoa.push(['', '', 'TOTAL PRESENTES POR FECHA'].concat(tp));
+  aoa.push(['', '', 'TOTAL ATRASOS POR FECHA'].concat(ta));
+  aoa.push(['', '', 'TOTAL FALTAS POR FECHA'].concat(tf));
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [{ wch: 5 }, { wch: 10 }, { wch: 42 }].concat(SESSIONS.map(() => ({ wch: 18 })), [{ wch: 10 }, { wch: 10 }, { wch: 8 }, { wch: 12 }]);
+  const lastC = 3 + SESSIONS.length;
+  for (let r = 3; r < 3 + STUDENTS.length; r++) { const a = XLSX.utils.encode_cell({ r, c: lastC + 3 }); if (ws[a] && ws[a].v !== '') ws[a].z = '0%'; }
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Asistencia');
+  saveFile('asistencia-3BT-A.xlsx', XLSX.write(wb, { bookType: 'xlsx', type: 'array' }));
+};
+
+render();
+
+// ---------- apertura por enlace del QR: #3BT-A-01-C5 ----------
+async function fromHash() {
+  const m = location.hash.match(/^#(3BT-A-\d+)-C(\d+)$/i);
+  if (!m) return;
+  const n = +m[2], s = sess(n);
+  showTab('lista');
+  if (!s) { show('QR no válido: la clase ' + m[2] + ' no existe.', 'bad'); return; }
+  let owner = window.claude ? false : isDoc();
+  if (window.claude) { try { const u = await cl.use('user'); owner = !!(u && u.isOwner()); } catch (e) {} }
+  if (!owner) { show('Este dispositivo no es el del docente, por eso la asistencia no se guardó. Muestra tu QR al docente para que lo escanee. (Docente: activa «Este dispositivo es el del docente» en la pestaña Códigos QR.)', 'bad'); return; }
+  cur = n; $('sesion').value = cur; render();
+  if (s.fecha !== today) { show('Este QR es de la clase ' + n + ' (' + dmy(s.fecha) + '), pero hoy es ' + dmy(today) + '. No se registró.', 'bad'); beep(false); return; }
+  register(m[1].toUpperCase() + '|C' + n);
+}
+fromHash(); addEventListener('hashchange', fromHash);
+</script>
+
+</body></html>
